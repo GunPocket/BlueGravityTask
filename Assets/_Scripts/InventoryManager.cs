@@ -2,35 +2,54 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour {
-    public List<ClothingItem> inventory = new List<ClothingItem>();
+    public List<ClothingItem> ShoppingCart = new List<ClothingItem>();
+    public List<ClothingItem> Inventory = new List<ClothingItem>();
 
     public void AddItem(ClothingItem item) {
-        inventory.Add(item);
+        ShoppingCart.Add(item);
     }
 
     public void RemoveItem(ClothingItem item) {
-        inventory.Remove(item);
+        ShoppingCart.Remove(item);
     }
 
     public void ShowInventory() {
-        if (inventory.Count > 0) {
-            print("Inventory:");
-            foreach (var item in inventory) {
+        if (ShoppingCart.Count > 0) {
+            print("Shopping Cart:");
+            foreach (var item in ShoppingCart) {
                 Debug.Log($"Item: {item.Name}, Type: {item.Type}, Value: ${item.Value}");
             }
             ShowPricesCombined();
-        } else { 
+        } else {
+            print("Shopping cart is empty");
+        }
+
+
+        if (Inventory.Count > 0) {
+            print("Inventory:");
+            foreach (var item in Inventory) {
+                Debug.Log($"Item: {item.Name}, Type: {item.Type}");
+            }
+        } else {
             print("Inventory is empty");
         }
-        print("");
     }
 
     private void ShowPricesCombined() {
         float price = 0;
 
-        foreach (var item in inventory) {
+        foreach (var item in ShoppingCart) {
             price += item.Value;
         }
-        print($"Total price on inventory: ${price}");
+        print($"Total price on shopping cart: ${price}");
+    }
+
+    public bool CheckItemIsHere(ClothingItem item) {
+        if (ShoppingCart.Count > 0) {
+            if (!ShoppingCart.Contains(item)) return false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

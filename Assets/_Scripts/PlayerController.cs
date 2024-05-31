@@ -1,22 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Collider2D playerCollider;
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private GameObject commentUI;
 
-    private Collider2D interactCollider;
+    [SerializeField] private bool canInteract = false;
 
-    private Vector2 moveInput;
+    private InteractableObject currentInteractable;
+
     private PlayerInput playerInput;
-    private bool canInteract = false;
-    private bool confirmAction = false;
+
+    private PlayerState currentState = PlayerState.Walking;
+
+    private enum PlayerState {
+        Walking,
+        Interacting
+    }
 
     private void Awake() {
         playerInput = new PlayerInput();
-
+        commentUI.SetActive(false);
         if (rb == null) {
             rb = GetComponent<Rigidbody2D>();
         }
@@ -32,75 +40,72 @@ public class PlayerController : MonoBehaviour {
 
     private void OnEnable() {
         playerInput.Player.Enable();
-        playerInput.Player.Move.performed += OnMove;
-        playerInput.Player.Move.canceled += OnMove;
-        playerInput.Player.Interact.performed += OnInteract;
-        playerInput.Player.Exit.performed += OnExit;
-        playerInput.Player.Inventory.performed += OnInventory;
+        playerInput.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
+        playerInput.Player.Move.canceled += ctx => Move(Vector2.zero);
+        playerInput.Player.Interact.performed += ctx => OnInteract();
+        playerInput.Player.Exit.performed += ctx => Exit();
+        playerInput.Player.Inventory.performed += ctx => ShowInventory();
     }
 
     private void OnDisable() {
         playerInput.Player.Disable();
-        playerInput.Player.Move.performed -= OnMove;
-        playerInput.Player.Move.canceled -= OnMove;
-        playerInput.Player.Interact.performed -= OnInteract;
-        playerInput.Player.Exit.performed -= OnExit;
-        playerInput.Player.Inventory.performed -= OnInventory;
+        playerInput.Player.Move.performed -= ctx => Move(ctx.ReadValue<Vector2>());
+        playerInput.Player.Move.canceled -= ctx => Move(Vector2.zero);
+        playerInput.Player.Interact.performed -= ctx => OnInteract();
+        playerInput.Player.Exit.performed -= ctx => Exit();
+        playerInput.Player.Inventory.performed -= ctx => ShowInventory();
     }
 
-    private void OnMove(InputAction.CallbackContext context) {
-        moveInput = context.ReadValue<Vector2>();
-    }
-
-    private void OnInteract(InputAction.CallbackContext context) {
-        if (canInteract) {
-            InteractableObject interactableObject = interactCollider.GetComponent<InteractableObject>();
-            ClothingItem item = interactableObject.ClothingItem;
-            if (interactableObject.ItemHere) {
-                inventoryManager.AddItem(item);
-                interactableObject.CollectItem();
-                Debug.Log("Item collected: " + item.name);
-            } else {
-                inventoryManager.RemoveItem(item);
-                interactableObject.ReturnItem();
-                Debug.Log("Item removed: " + item.name);
-            }
-
-        }
-
-        if (confirmAction) {
-            interactCollider?.GetComponent<InteractableObject>().Interact();
+    private void Move(Vector2 direction) {
+        if (currentState == PlayerState.Walking) {
+            Vector2 moveVelocity = direction * moveSpeed;
+            rb.velocity = moveVelocity;
         }
     }
 
-    private void OnExit(InputAction.CallbackContext context) {
-        if (confirmAction) {
-            //close interaction window
+    private void OnInteract() {
+        print(currentState);
+        print(canInteract);
+        if (currentState == PlayerState.Interacting) {
+            commentUI.GetComponent<CommentUI>().HideUi();
+            currentState = PlayerState.Walking;
+            return;
+        }
+
+        if (currentState == PlayerState.Walking && canInteract) {
+            rb.velocity = Vector2.zero;
+            ClothingItem item = currentInteractable.ClothingItem;
+            commentUI.GetComponent<CommentUI>().ShowUi(currentInteractable.Message, item);
+            currentState = PlayerState.Interacting;
+            return;
         }
     }
 
-    private void OnInventory(InputAction.CallbackContext context) {
-        inventoryManager.ShowInventory();
+    private void Exit() {
+        if (currentState == PlayerState.Interacting) {
+            currentState = PlayerState.Walking;
+            commentUI.SetActive(false);
+        }
     }
 
-    private void FixedUpdate() {
-        Vector2 moveVelocity = moveInput * moveSpeed;
-        rb.velocity = moveVelocity;
+    private void ShowInventory() {
+        if (currentState == PlayerState.Walking) {
+            inventoryManager.ShowInventory();
+        }
     }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Interactable")) {
             canInteract = true;
-            other.GetComponent<InteractableObject>().ShowInteractSprite();
-            interactCollider = other;
+
+            currentInteractable = other.GetComponent<InteractableObject>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Interactable")) {
             canInteract = false;
-            other.GetComponent<InteractableObject>().HideInteractSprite();
-            interactCollider = null;
+
+            currentInteractable = null;
         }
     }
 }

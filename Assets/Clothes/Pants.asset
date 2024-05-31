@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c422666bc1dc0a74ea0f5d152dc9c5e9, type: 3}
   m_Name: Pants
   m_EditorClassIdentifier: 
-  Name: Nice Shorts
+  Name: Purple Shorts
   Type: 0
   Value: 8.99
   Image: {fileID: 21300000, guid: 5e5270d07c58e394faba81016b7b0246, type: 3}
