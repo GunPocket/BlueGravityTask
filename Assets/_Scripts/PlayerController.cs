@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
@@ -8,8 +6,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Collider2D playerCollider;
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private GameObject commentUI;
+    [SerializeField] private GameObject dressingRoomUI;
+    [SerializeField] private Transform dressingRoomPosition;
 
-    [SerializeField] private bool canInteract = false;
+    private bool canInteract = false;
 
     private InteractableObject currentInteractable;
 
@@ -19,12 +19,15 @@ public class PlayerController : MonoBehaviour {
 
     private enum PlayerState {
         Walking,
-        Interacting
+        Interacting,
+        Dressing
     }
 
     private void Awake() {
         playerInput = new PlayerInput();
         commentUI.SetActive(false);
+        dressingRoomUI.SetActive(false);
+
         if (rb == null) {
             rb = GetComponent<Rigidbody2D>();
         }
@@ -64,27 +67,40 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnInteract() {
-        print(currentState);
-        print(canInteract);
         if (currentState == PlayerState.Interacting) {
             commentUI.GetComponent<CommentUI>().HideUi();
             currentState = PlayerState.Walking;
+            currentInteractable.ShowSprite();
             return;
         }
 
         if (currentState == PlayerState.Walking && canInteract) {
-            rb.velocity = Vector2.zero;
-            ClothingItem item = currentInteractable.ClothingItem;
-            commentUI.GetComponent<CommentUI>().ShowUi(currentInteractable.Message, item);
-            currentState = PlayerState.Interacting;
-            return;
+            currentInteractable.HideSprite();
+            if (currentInteractable.CompareTag("DressingRoom")) {
+                EnterDressingRoom();
+            } else {
+                rb.velocity = Vector2.zero;
+                ClothingItem item = currentInteractable.ClothingItem;
+                commentUI.GetComponent<CommentUI>().ShowUi(currentInteractable.Message, item);
+                currentState = PlayerState.Interacting;
+            }
         }
+    }
+
+    private void EnterDressingRoom() {
+        transform.position = dressingRoomPosition.position;
+        dressingRoomUI.SetActive(true);
+        currentState = PlayerState.Dressing;
+        rb.velocity = Vector2.zero;
     }
 
     private void Exit() {
         if (currentState == PlayerState.Interacting) {
             currentState = PlayerState.Walking;
             commentUI.SetActive(false);
+        } else if (currentState == PlayerState.Dressing) {
+            currentState = PlayerState.Walking;
+            dressingRoomUI.SetActive(false);
         }
     }
 
@@ -93,18 +109,17 @@ public class PlayerController : MonoBehaviour {
             inventoryManager.ShowInventory();
         }
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Interactable")) {
-            canInteract = true;
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom")) {
+            canInteract = true;
             currentInteractable = other.GetComponent<InteractableObject>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Interactable")) {
+        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom")) {
             canInteract = false;
-
             currentInteractable = null;
         }
     }

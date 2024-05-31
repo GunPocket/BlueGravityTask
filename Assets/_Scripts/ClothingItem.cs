@@ -6,6 +6,7 @@ public class ClothingItem : ScriptableObject {
     public ItemType Type;
     public float Value;
     public Sprite Image;
+    public bool IsDefault = false;
 
     public enum ItemType {
         Pants,

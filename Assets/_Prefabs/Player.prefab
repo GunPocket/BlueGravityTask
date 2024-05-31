@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2570124820081032611}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,9 @@ MonoBehaviour:
   rb: {fileID: 2426456485793464533}
   playerCollider: {fileID: 6723347362387647373}
   inventoryManager: {fileID: 2570124820081032611}
-  confirmationUI: {fileID: 0}
+  commentUI: {fileID: 0}
+  dressingRoomUI: {fileID: 0}
+  dressingRoomPosition: {fileID: 0}
 --- !u!114 &2570124820081032611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf562426ac2fa94e99e59e9d82c14d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
+  ShoppingCart: []
+  Inventory:
+  - {fileID: 11400000, guid: e12ed1145ddec0646a0e8996301b89db, type: 2}
+  - {fileID: 11400000, guid: 8f796d8da7eb13b488009b45e876eda6, type: 2}
+  - {fileID: 11400000, guid: a679b7311bf91d54d9c9a7430794e2ff, type: 2}
+  - {fileID: 11400000, guid: 3d5dca9b287046941b4b073635d3edae, type: 2}
 --- !u!1 &8903436830656236062
 GameObject:
   m_ObjectHideFlags: 0

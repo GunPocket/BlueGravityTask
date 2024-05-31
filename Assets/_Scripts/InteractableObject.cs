@@ -11,14 +11,22 @@ public class InteractableObject : MonoBehaviour {
     public string Message { get { return message; } }
 
     private void Start() {
-        interactSprite.SetActive(false);
+        HideSprite();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        interactSprite.SetActive(true);
+        ShowSprite();
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
+        HideSprite();
+    }
+
+    public void ShowSprite() {
+        interactSprite.SetActive(true);
+    }
+
+    public void HideSprite() {
         interactSprite.SetActive(false);
     }
 }
