@@ -29,7 +29,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Interact"",
-                    ""type"": ""Button"",
+                    ""ClotheType"": ""Button"",
                     ""id"": ""da1f1c06-ce1f-4d49-b6c9-913275d4d344"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -38,7 +38,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""ClotheType"": ""Value"",
                     ""id"": ""816af361-7205-46ae-92d1-e2b6a719d476"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -47,7 +47,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Inventory"",
-                    ""type"": ""Button"",
+                    ""ClotheType"": ""Button"",
                     ""id"": ""2daa3cd0-e512-45a5-9ada-7c7e6986a12a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -56,7 +56,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Exit"",
-                    ""type"": ""Button"",
+                    ""ClotheType"": ""Button"",
                     ""id"": ""3f1a6713-a2b9-47c4-af8d-81ca662fc992"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
