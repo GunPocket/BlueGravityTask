@@ -52,4 +52,10 @@ public class InventoryManager : MonoBehaviour {
             return false;
         }
     }
+
+    public void AddItemsToCart(List<ClothingItem> items) {
+        foreach (var item in items) {
+            ShoppingCart.Add(item);
+        }
+    }
 }

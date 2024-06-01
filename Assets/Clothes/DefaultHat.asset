@@ -17,3 +17,4 @@ MonoBehaviour:
   Value: 2.99
   Image: {fileID: 21300000, guid: 0f4b03a8116717d4b82e79f0ce4f2159, type: 3}
   IsDefault: 1
+  Description: Simple headwear for sun protection.

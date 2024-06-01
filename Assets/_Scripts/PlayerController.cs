@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private GameObject commentUI;
     [SerializeField] private GameObject dressingRoomUI;
-    [SerializeField] private Transform dressingRoomPosition;
 
     private bool canInteract = false;
+
+    public bool inputEnabled = true;
 
     private InteractableObject currentInteractable;
 
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnEnable() {
+        currentState = PlayerState.Walking;
+
+
         playerInput.Player.Enable();
         playerInput.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
         playerInput.Player.Move.canceled += ctx => Move(Vector2.zero);
@@ -77,6 +81,7 @@ public class PlayerController : MonoBehaviour {
         if (currentState == PlayerState.Walking && canInteract) {
             currentInteractable.HideSprite();
             if (currentInteractable.CompareTag("DressingRoom")) {
+                inputEnabled = false;
                 EnterDressingRoom();
             } else {
                 rb.velocity = Vector2.zero;
@@ -88,10 +93,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void EnterDressingRoom() {
-        transform.position = dressingRoomPosition.position;
         dressingRoomUI.SetActive(true);
         currentState = PlayerState.Dressing;
         rb.velocity = Vector2.zero;
+        gameObject.SetActive(false);
     }
 
     private void Exit() {

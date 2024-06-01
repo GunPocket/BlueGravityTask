@@ -17,3 +17,4 @@ MonoBehaviour:
   Value: 2.99
   Image: {fileID: 21300000, guid: e44368566aac3c941b7c3eff9f5a9890, type: 3}
   IsDefault: 1
+  Description: Ordinary footwear for casual occasions.

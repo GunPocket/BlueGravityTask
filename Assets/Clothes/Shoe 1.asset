@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: Combat Boots
   Type: 2
   Value: 29.99
-  Image: {fileID: 21300000, guid: e44368566aac3c941b7c3eff9f5a9890, type: 3}
+  Image: {fileID: 21300000, guid: d01ad69ce742d2f44b516e45d3ccc9d6, type: 3}
   IsDefault: 0
+  Description: Tough and durable.

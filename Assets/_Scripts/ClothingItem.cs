@@ -8,6 +8,8 @@ public class ClothingItem : ScriptableObject {
     public Sprite Image;
     public bool IsDefault = false;
 
+    [TextArea(1, 5)] public string Description;
+
     public enum ItemType {
         Pants,
         Shirt,
