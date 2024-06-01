@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
@@ -21,7 +22,8 @@ public class PlayerController : MonoBehaviour {
     private enum PlayerState {
         Walking,
         Interacting,
-        Dressing
+        Dressing,
+        LookingAtInventory
     }
 
     private void Awake() {
@@ -44,7 +46,6 @@ public class PlayerController : MonoBehaviour {
 
     private void OnEnable() {
         currentState = PlayerState.Walking;
-
 
         playerInput.Player.Enable();
         playerInput.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
@@ -106,12 +107,20 @@ public class PlayerController : MonoBehaviour {
         } else if (currentState == PlayerState.Dressing) {
             currentState = PlayerState.Walking;
             dressingRoomUI.SetActive(false);
+        } else if (currentState == PlayerState.LookingAtInventory) {
+            currentState = PlayerState.Walking;
+            inventoryManager.HideInventoryUI();
         }
     }
 
     private void ShowInventory() {
         if (currentState == PlayerState.Walking) {
-            inventoryManager.ShowInventory();
+            rb.velocity = Vector2.zero;
+            currentState = PlayerState.LookingAtInventory;
+            inventoryManager.ShowInventoryUI();
+        } else if (currentState == PlayerState.LookingAtInventory) {
+            inventoryManager.HideInventoryUI();
+            currentState = PlayerState.Walking;
         }
     }
 

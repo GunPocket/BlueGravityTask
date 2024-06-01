@@ -139,8 +139,9 @@ public class ClothingSelectionManager : MonoBehaviour {
     }
 
     private void Exit() {
-        playerTransform.GetComponent<InventoryManager>().AddItemsToCart(cartItems);
-
+        foreach (var item in cartItems) {
+            playerTransform.GetComponent<InventoryManager>().AddItemToCart(item);
+        }
         gameObject.SetActive(false);
         cartItems.Clear();
         selectedClothing.Clear();

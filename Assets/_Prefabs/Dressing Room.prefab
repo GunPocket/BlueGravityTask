@@ -2306,9 +2306,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 761793619565161780}
   - {fileID: 3197467568983252409}
   - {fileID: 1778648017666075276}
-  - {fileID: 761793619565161780}
   - {fileID: 7171519835183668768}
   - {fileID: 7152893880970050110}
   m_Father: {fileID: 0}
@@ -2955,7 +2955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
