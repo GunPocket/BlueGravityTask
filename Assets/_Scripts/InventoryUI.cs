@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static ClothingItem;
 
 public class InventoryUI : MonoBehaviour {
-    [SerializeField] private TMP_Text[] currentlyWearingTexts;
     [SerializeField] private List<ButtonOption> clothingOptions;
+
+    [SerializeField] private PlayerController playerController;
 
     [System.Serializable]
     public struct ButtonOption {
@@ -15,15 +15,8 @@ public class InventoryUI : MonoBehaviour {
         public List<Button> buttons;
     }
 
-    public TMP_Text[] CurrentlyWearingTexts { get { return currentlyWearingTexts; } }
-
-    public void UpdateCurrentlyWearingText(int sectionIndex, string itemName) {
-        currentlyWearingTexts[sectionIndex].text = $"Currently wearing: {itemName}";
-    }
-
     public void UpdateClothingItemButtons(List<ClothingItem> clothingItems) {
         foreach (var option in clothingOptions) {
-            // Filtrar os itens de acordo com o tipo da opção
             var filteredItems = clothingItems.Where(item => item.Type == option.type).ToList();
 
             for (int i = 0; i < option.buttons.Count; i++) {
@@ -42,7 +35,7 @@ public class InventoryUI : MonoBehaviour {
     }
 
     private void OnClothingItemButtonClick(ClothingItem item) {
-        // Implement logic to equip the selected item and update currently wearing text
-        Debug.Log($"Equipping item: {item.Name}");
+        playerController.EquipItem(item);
     }
 }
+

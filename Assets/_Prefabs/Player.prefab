@@ -120,13 +120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982197836fca64c4d853807be7dc0069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   rb: {fileID: 2426456485793464533}
   playerCollider: {fileID: 6723347362387647373}
   inventoryManager: {fileID: 2570124820081032611}
   commentUI: {fileID: 0}
   dressingRoomUI: {fileID: 0}
-  dressingRoomPosition: {fileID: 0}
+  checkoutUICanvas: {fileID: 0}
+  moneyText: {fileID: 0}
+  playerMoney: 200
+  moveSpeed: 5
 --- !u!114 &2570124820081032611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +147,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8f796d8da7eb13b488009b45e876eda6, type: 2}
   - {fileID: 11400000, guid: a679b7311bf91d54d9c9a7430794e2ff, type: 2}
   - {fileID: 11400000, guid: 3d5dca9b287046941b4b073635d3edae, type: 2}
+  inventoryCanvas: {fileID: 0}
+  InventoryUI: {fileID: 0}
+  shoppingCartUI: {fileID: 0}
+  playerController: {fileID: 2400251752911666068}
 --- !u!1 &8903436830656236062
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ public class ClothingSelectionManager : MonoBehaviour {
     [Header("UI Buttons")]
     [Tooltip("Reference to the 'Add to Cart' button.")]
     [SerializeField] private Button addToCartButton;
-    [Tooltip("Reference to the 'Exit' button.")]
+    [Tooltip("Reference to the 'ExitClothingSelector' button.")]
     [SerializeField] private Button exitButton;
     [Tooltip("List of buttons for clothing types.")]
     [SerializeField] private List<Button> typeOfClotheBtn;
@@ -49,7 +49,7 @@ public class ClothingSelectionManager : MonoBehaviour {
 
     private void Start() {
         addToCartButton.onClick.AddListener(AddToCart);
-        exitButton.onClick.AddListener(Exit);
+        exitButton.onClick.AddListener(ExitClothingSelector);
 
         for (int i = 0; i < typeOfClotheBtn.Count; i++) {
             int index = i;
@@ -138,7 +138,7 @@ public class ClothingSelectionManager : MonoBehaviour {
         }
     }
 
-    private void Exit() {
+    private void ExitClothingSelector() {
         foreach (var item in cartItems) {
             playerTransform.GetComponent<InventoryManager>().AddItemToCart(item);
         }
@@ -147,7 +147,6 @@ public class ClothingSelectionManager : MonoBehaviour {
         selectedClothing.Clear();
         UpdateCartItemsText();
         UpdateCurrentPrice();
-
-        playerTransform.SetActive(true);
+        playerTransform.gameObject.GetComponent<PlayerController>().SetWalkingState();
     }
 }

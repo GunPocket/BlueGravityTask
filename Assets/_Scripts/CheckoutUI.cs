@@ -3,74 +3,115 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CheckoutUI : MonoBehaviour {
-    [SerializeField] private GameObject checkoutCanvas;
-    [SerializeField] private Text moneyText;
-    [SerializeField] private Button[][] inventoryButtons;
-    [SerializeField] private Button[][] cartButtons;
+    [SerializeField] private List<ShoppingCartOption> inventoryImageAreas;
+    [SerializeField] private List<ShoppingCartOption> cartImageAreas;
+    [SerializeField] private Button exitButton;
 
-    private float playerMoney;
+    [SerializeField] private PlayerController playerController;
 
-    public void ShowCheckoutUI(int money, List<ClothingItem> inventory, List<ClothingItem> shoppingCart) {
-        playerMoney = money;
-        moneyText.text = $"Money: ${playerMoney}";
+    [System.Serializable]
+    public struct ShoppingCartOption {
+        public ClothingItem.ItemType type;
+        public List<Button> imageAreas;
+    }
 
-        UpdateInventoryButtons(inventory);
-        UpdateCartButtons(shoppingCart);
+    public void Awake() {
+        exitButton.onClick.AddListener(ExitCheckout);
+        ShowCheckoutUI();
+    }
 
-        checkoutCanvas.SetActive(true);
+    public void ShowCheckoutUI() {
+        UpdateMoneyText();
+        UpdateInventoryButtons(playerController.InventoryManager.Inventory);
+        UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
+
+        gameObject.SetActive(true);
     }
 
     public void HideCheckoutUI() {
-        checkoutCanvas.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    private void UpdateMoneyText() {
+        playerController.UpdateMoney($"Money: ${playerController.PlayerMoney:F2}");
     }
 
     private void UpdateInventoryButtons(List<ClothingItem> inventory) {
-        for (int i = 0; i < inventoryButtons.Length; i++) {
-            for (int j = 0; j < inventoryButtons[i].Length; j++) {
-                int index = i * inventoryButtons[i].Length + j;
-                if (index < inventory.Count) {
-                    inventoryButtons[i][j].gameObject.SetActive(true);
-                    inventoryButtons[i][j].GetComponent<Image>().sprite = inventory[index].Image;
-                    int itemIndex = index;
-                    inventoryButtons[i][j].onClick.RemoveAllListeners();
-                    inventoryButtons[i][j].onClick.AddListener(() => SellItem(inventory[itemIndex]));
-                } else {
-                    inventoryButtons[i][j].gameObject.SetActive(false);
-                }
-            }
+        ClearAllImageAreas(inventoryImageAreas);
+
+        foreach (var item in inventory) {
+            UpdateClothingImage(inventoryImageAreas, item, () => SellItem(item));
         }
     }
 
     private void UpdateCartButtons(List<ClothingItem> shoppingCart) {
-        for (int i = 0; i < cartButtons.Length; i++) {
-            for (int j = 0; j < cartButtons[i].Length; j++) {
-                int index = i * cartButtons[i].Length + j;
-                if (index < shoppingCart.Count) {
-                    cartButtons[i][j].gameObject.SetActive(true);
-                    cartButtons[i][j].GetComponent<Image>().sprite = shoppingCart[index].Image;
-                    int itemIndex = index;
-                    cartButtons[i][j].onClick.RemoveAllListeners();
-                    cartButtons[i][j].onClick.AddListener(() => BuyItem(shoppingCart[itemIndex]));
-                } else {
-                    cartButtons[i][j].gameObject.SetActive(false);
+        ClearAllImageAreas(cartImageAreas);
+
+        foreach (var item in shoppingCart) {
+            UpdateClothingImage(cartImageAreas, item, () => BuyItem(item));
+        }
+    }
+
+    private void ClearAllImageAreas(List<ShoppingCartOption> options) {
+        foreach (var option in options) {
+            ClearImageAreas(option.imageAreas);
+        }
+    }
+
+    private void ClearImageAreas(List<Button> imageAreas) {
+        foreach (var imageArea in imageAreas) {
+            imageArea.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateClothingImage(List<ShoppingCartOption> options, ClothingItem item, UnityEngine.Events.UnityAction action) {
+        foreach (var option in options) {
+            if (option.type == item.Type) {
+                for (int i = 0; i < option.imageAreas.Count; i++) {
+                    if (!option.imageAreas[i].gameObject.activeSelf) {
+                        option.imageAreas[i].gameObject.SetActive(true);
+                        option.imageAreas[i].GetComponent<Image>().sprite = item.Image;
+                        option.imageAreas[i].onClick.RemoveAllListeners();
+                        option.imageAreas[i].onClick.AddListener(action);
+                        break;
+                    }
                 }
             }
         }
     }
 
     private void SellItem(ClothingItem item) {
-        playerMoney += Mathf.FloorToInt(item.Value * 0.1f);
-        moneyText.text = $"Money: ${playerMoney}";
-        // Implement logic to remove item from inventory
+        if (playerController.CurrentlyWearing.Contains(item)) {
+            Debug.Log("Cannot sell an item that you are currently wearing!");
+            return;
+        }
+
+        int sellValue = Mathf.FloorToInt(item.Value * 0.1f);
+        playerController.PlayerMoney += sellValue;
+        UpdateMoneyText();
+
+        if (playerController.InventoryManager.Inventory.Contains(item)) {
+            playerController.InventoryManager.RemoveItemFromInventory(item);
+            UpdateInventoryButtons(playerController.InventoryManager.Inventory);
+        } else if (playerController.InventoryManager.ShoppingCart.Contains(item)) {
+            playerController.InventoryManager.RemoveItemFromCart(item);
+            UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
+        }
     }
 
     private void BuyItem(ClothingItem item) {
-        if (playerMoney >= item.Value) {
-            playerMoney -= item.Value;
-            moneyText.text = $"Money: ${playerMoney}";
-            // Implement logic to remove item from shopping cart
-        } else {
-            Debug.Log("Not enough money to buy this item!");
+        if (playerController.PlayerMoney >= item.Value) {
+            playerController.PlayerMoney -= item.Value;
+            UpdateMoneyText();
+            playerController.InventoryManager.RemoveItemFromCart(item);
+            playerController.InventoryManager.AddItemToInventory(item);
+            UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
+            UpdateInventoryButtons(playerController.InventoryManager.Inventory);
         }
+    }
+
+    private void ExitCheckout() {
+        HideCheckoutUI();
+        playerController.SetWalkingState();
     }
 }

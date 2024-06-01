@@ -6,8 +6,9 @@ public class InventoryManager : MonoBehaviour {
     public List<ClothingItem> Inventory = new List<ClothingItem>();
 
     [SerializeField] private GameObject inventoryCanvas;
-    [SerializeField] private InventoryUI inventoryUI;
+    public InventoryUI InventoryUI;
     [SerializeField] private ShoppingCartUI shoppingCartUI;
+    [SerializeField] private PlayerController playerController;
 
     private void Start() {
         inventoryCanvas.SetActive(false);
@@ -15,7 +16,14 @@ public class InventoryManager : MonoBehaviour {
 
     public void ShowInventoryUI() {
         UpdateInventoryUI();
+        EquipItemsFromInventory();
         inventoryCanvas.SetActive(true);
+    }
+
+    private void EquipItemsFromInventory() {
+        foreach (var item in Inventory) {
+            playerController.EquipItem(item);
+        }
     }
 
     public void HideInventoryUI() {
@@ -23,31 +31,16 @@ public class InventoryManager : MonoBehaviour {
     }
 
     private void UpdateInventoryUI() {
-        UpdateCurrentlyWearingText();
         UpdateClothingItemButtons();
         UpdateShoppingCartUI();
     }
 
-    private void UpdateCurrentlyWearingText() {
-        for (int i = 0; i < inventoryUI.CurrentlyWearingTexts.Length; i++) {
-            inventoryUI.UpdateCurrentlyWearingText(i, "Default");
-        }
-    }
-
     private void UpdateClothingItemButtons() {
-        inventoryUI.UpdateClothingItemButtons(Inventory);
+        InventoryUI.UpdateClothingItemButtons(Inventory);
     }
 
     private void UpdateShoppingCartUI() {
         shoppingCartUI.UpdateClothingImages(ShoppingCart);
-    }
-
-    public void EquipItem(ClothingItem item) {
-        Debug.Log($"Equipping item: {item.Name}");
-    }
-
-    public void UnequipItem(ClothingItem item) {
-        Debug.Log($"Unequipping item: {item.Name}");
     }
 
     public void AddItemToInventory(ClothingItem item) {
@@ -56,6 +49,7 @@ public class InventoryManager : MonoBehaviour {
 
     public void RemoveItemFromInventory(ClothingItem item) {
         Inventory.Remove(item);
+        UpdateInventoryUI();
     }
 
     public void AddItemToCart(ClothingItem item) {
@@ -64,7 +58,11 @@ public class InventoryManager : MonoBehaviour {
     }
 
     public void RemoveItemFromCart(ClothingItem item) {
-        ShoppingCart.Add(item);
+        ShoppingCart.Remove(item);
         UpdateShoppingCartUI();
+    }
+
+    private ClothingItem GetEquippedItem(ClothingItem.ItemType itemType) {
+        return Inventory.Find(item => item.Type == itemType);
     }
 }
