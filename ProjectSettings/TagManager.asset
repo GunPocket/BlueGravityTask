@@ -7,6 +7,7 @@ TagManager:
   - Interactable
   - DressingRoom
   - Checkout
+  - ExitGame
   layers:
   - Default
   - TransparentFX

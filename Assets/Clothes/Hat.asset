@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Hat
   m_EditorClassIdentifier: 
   Name: Stylish Hat
-  Type: 3
+  Type: 0
   Value: 26.41
   Image: {fileID: 21300000, guid: 0f4b03a8116717d4b82e79f0ce4f2159, type: 3}
   IdleSprite: {fileID: -1590738803, guid: 4b860a35b7537cd478c7a2357c2cb03f, type: 3}
-  WalkingSprite1: {fileID: -1245370455, guid: 15f291e68debe7a41a3c1f4149544703, type: 3}
-  WalkingSprite2: {fileID: 13171290, guid: 15f291e68debe7a41a3c1f4149544703, type: 3}
+  ClotSeleSprite: {fileID: 738761882, guid: 0046e0b3ae7dc234995d0b290141fe42, type: 3}
   IsDefault: 0
-  IsEquipped: 0
   Description: Casual and comfortable.

@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Shoe 2
   m_EditorClassIdentifier: 
   Name: Running Shoes
-  Type: 2
+  Type: 3
   Value: 27.99
   Image: {fileID: 21300000, guid: 1e21f255685f0be43be6db8a32987a2a, type: 3}
   IdleSprite: {fileID: -1483188592, guid: 57e93ef0b15cde04c8f1120163519acd, type: 3}
-  WalkingSprite1: {fileID: 1353251740, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
-  WalkingSprite2: {fileID: 1594848581, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
+  ClotSeleSprite: {fileID: -391163851, guid: b0ebe2b76dcc47e4ea5948d9ab5b6aa8, type: 3}
   IsDefault: 0
-  IsEquipped: 0
   Description: Agile and lightweight.

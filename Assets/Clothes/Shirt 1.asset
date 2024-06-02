@@ -17,8 +17,6 @@ MonoBehaviour:
   Value: 29.99
   Image: {fileID: 21300000, guid: 9b65448caaf7f204d926ba2e84b33331, type: 3}
   IdleSprite: {fileID: -142390715, guid: c10f820eb4c986346bcf26d1f92b95c0, type: 3}
-  WalkingSprite1: {fileID: -808432271, guid: a4c34649cbdbb4b4ba0a1a37e34e89fc, type: 3}
-  WalkingSprite2: {fileID: 510747059, guid: a4c34649cbdbb4b4ba0a1a37e34e89fc, type: 3}
+  ClotSeleSprite: {fileID: 601916770, guid: 90fadffaf1bf51542924da09534efa23, type: 3}
   IsDefault: 0
-  IsEquipped: 0
   Description: Warm and cozy.

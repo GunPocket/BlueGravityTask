@@ -2967,13 +2967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791bdffaa723e640846103146b455eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentlyWearingTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   clothingOptions:
-  - type: 3
+  - type: 0
     buttons:
     - {fileID: 5205025342512411926}
     - {fileID: 7526740545660663640}
@@ -2989,18 +2984,18 @@ MonoBehaviour:
     - {fileID: 3965542135088009675}
   - type: 2
     buttons:
-    - {fileID: 2455585620115010658}
-    - {fileID: 5594458744770511076}
-    - {fileID: 5724498244141519063}
-    - {fileID: 6636895184963145176}
-    - {fileID: 1462841467647023079}
-  - type: 0
-    buttons:
     - {fileID: 5109388864396250399}
     - {fileID: 7399488223863761227}
     - {fileID: 5972611329209615147}
     - {fileID: 6715089254748132487}
     - {fileID: 8691483235035432905}
+  - type: 3
+    buttons:
+    - {fileID: 2455585620115010658}
+    - {fileID: 5594458744770511076}
+    - {fileID: 5724498244141519063}
+    - {fileID: 6636895184963145176}
+    - {fileID: 1462841467647023079}
   playerController: {fileID: 0}
 --- !u!114 &9143532488735074594
 MonoBehaviour:
@@ -3016,7 +3011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clothingValueAllText: {fileID: 7460216051717878511}
   clothingImageAreas:
-  - type: 3
+  - type: 0
     imageAreas:
     - {fileID: 321736306878459469}
     - {fileID: 8924196027994416113}
@@ -3030,14 +3025,14 @@ MonoBehaviour:
     - {fileID: 3940080169627467944}
     - {fileID: 893799757392491045}
     - {fileID: 2099725294710375124}
-  - type: 0
+  - type: 2
     imageAreas:
     - {fileID: 4412856038658834255}
     - {fileID: 5533208524740295639}
     - {fileID: 4360992218533203160}
     - {fileID: 4304092337655401826}
     - {fileID: 144727023775261622}
-  - type: 2
+  - type: 3
     imageAreas:
     - {fileID: 4906130725507141525}
     - {fileID: 2549294623794715813}

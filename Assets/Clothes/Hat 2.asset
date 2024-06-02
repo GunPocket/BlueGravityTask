@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Hat 2
   m_EditorClassIdentifier: 
   Name: Fedora
-  Type: 3
+  Type: 0
   Value: 45.67
   Image: {fileID: 21300000, guid: a05bbf2012f3efb418e07c2c303056cb, type: 3}
   IdleSprite: {fileID: 932361993, guid: 4b860a35b7537cd478c7a2357c2cb03f, type: 3}
-  WalkingSprite1: {fileID: 890546154, guid: 15f291e68debe7a41a3c1f4149544703, type: 3}
-  WalkingSprite2: {fileID: -1309408782, guid: 15f291e68debe7a41a3c1f4149544703, type: 3}
+  ClotSeleSprite: {fileID: 532983946, guid: 0046e0b3ae7dc234995d0b290141fe42, type: 3}
   IsDefault: 0
-  IsEquipped: 0
   Description: Elegant and stylish.

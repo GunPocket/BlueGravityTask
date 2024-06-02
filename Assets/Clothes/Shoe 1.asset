@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Shoe 1
   m_EditorClassIdentifier: 
   Name: Combat Boots
-  Type: 2
+  Type: 3
   Value: 29.99
   Image: {fileID: 21300000, guid: d01ad69ce742d2f44b516e45d3ccc9d6, type: 3}
   IdleSprite: {fileID: -1163232142, guid: 57e93ef0b15cde04c8f1120163519acd, type: 3}
-  WalkingSprite1: {fileID: -1050464293, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
-  WalkingSprite2: {fileID: 2126673617, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
+  ClotSeleSprite: {fileID: -633192335, guid: b0ebe2b76dcc47e4ea5948d9ab5b6aa8, type: 3}
   IsDefault: 0
-  IsEquipped: 0
   Description: Tough and durable.

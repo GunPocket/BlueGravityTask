@@ -6410,7 +6410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryImageAreas:
-  - type: 3
+  - type: 0
     imageAreas:
     - {fileID: 9140256325386118900}
     - {fileID: 7536247514517894568}
@@ -6424,14 +6424,14 @@ MonoBehaviour:
     - {fileID: 5559844099688885506}
     - {fileID: 5584381570583444210}
     - {fileID: 8962245597167162598}
-  - type: 0
+  - type: 2
     imageAreas:
     - {fileID: 3531042983407262375}
     - {fileID: 1254314196333914790}
     - {fileID: 8610074236214257801}
     - {fileID: 8138797052095845691}
     - {fileID: 6198088323517820755}
-  - type: 2
+  - type: 3
     imageAreas:
     - {fileID: 2519238999596970258}
     - {fileID: 8793947975513067731}
@@ -6439,7 +6439,7 @@ MonoBehaviour:
     - {fileID: 757524128617231841}
     - {fileID: 619104854296944538}
   cartImageAreas:
-  - type: 3
+  - type: 0
     imageAreas:
     - {fileID: 2630530990956036884}
     - {fileID: 6069884755233151389}
@@ -6453,14 +6453,14 @@ MonoBehaviour:
     - {fileID: 8696578844173743404}
     - {fileID: 827612003111944110}
     - {fileID: 1891050709020411047}
-  - type: 0
+  - type: 2
     imageAreas:
     - {fileID: 3051569099011434567}
     - {fileID: 1301796539149257559}
     - {fileID: 9017806454172307522}
     - {fileID: 533557329739360664}
     - {fileID: 5937928778944557197}
-  - type: 2
+  - type: 3
     imageAreas:
     - {fileID: 2976820390077632903}
     - {fileID: 1885376879759357144}

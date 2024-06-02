@@ -2,17 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using static ClothingItem;
 
 public class ClothingSelectionManager : MonoBehaviour {
-    public enum ClothingType { Hat, Shirt, Pants, Shoes }
-
     [Header("Player Reference")]
     [Tooltip("Reference to the player's Transform.")]
     [SerializeField] private GameObject playerTransform;
 
     [System.Serializable]
     public struct ClothingOption {
-        public ClothingType type;
+        public ItemType type;
         public List<ClothingItem> items;
     }
 
@@ -43,9 +42,15 @@ public class ClothingSelectionManager : MonoBehaviour {
     [Tooltip("List of available clothing options.")]
     [SerializeField] private List<ClothingOption> clothingOptions;
 
+    [Header("Clothes Sprites")]
+    [SerializeField] private Image hatRenderer;
+    [SerializeField] private Image shirtRenderer;
+    [SerializeField] private Image pantsRenderer;
+    [SerializeField] private Image shoesRenderer;
+
     private List<ClothingItem> cartItems = new List<ClothingItem>();
-    private Dictionary<ClothingType, List<ClothingItem>> availableClothing = new Dictionary<ClothingType, List<ClothingItem>>();
-    private Dictionary<ClothingType, ClothingItem> selectedClothing = new Dictionary<ClothingType, ClothingItem>();
+    private Dictionary<ItemType, List<ClothingItem>> availableClothing = new Dictionary<ItemType, List<ClothingItem>>();
+    private Dictionary<ItemType, ClothingItem> selectedClothing = new Dictionary<ItemType, ClothingItem>();
 
     private void Start() {
         addToCartButton.onClick.AddListener(AddToCart);
@@ -53,16 +58,15 @@ public class ClothingSelectionManager : MonoBehaviour {
 
         for (int i = 0; i < typeOfClotheBtn.Count; i++) {
             int index = i;
-            typeOfClotheBtn[i].onClick.AddListener(() => ShowClothingOptions((ClothingType)index));
+            typeOfClotheBtn[i].onClick.AddListener(() => ShowClothingOptions((ItemType)index));
         }
 
         UpdateCharacterImage();
         UpdateCurrentPrice();
     }
 
-    public void ShowClothingOptions(ClothingType type) {
+    public void ShowClothingOptions(ItemType type) {
         ClearClothingButtons();
-
 
         if (!availableClothing.ContainsKey(type)) {
             availableClothing[type] = new List<ClothingItem>();
@@ -81,14 +85,17 @@ public class ClothingSelectionManager : MonoBehaviour {
         for (int i = items.Count; i < clothesOptionBtns.Count; i++) {
             clothesOptionBtns[i].gameObject.SetActive(false);
         }
+
+        UpdateCharacterImage();
     }
 
-    private void OnClothingOptionSelected(ClothingType type, ClothingItem item) {
+    private void OnClothingOptionSelected(ItemType type, ClothingItem item) {
         clotheInfo.SetActive(true);
         if (!selectedClothing.ContainsValue(item)) {
             selectedClothing[type] = item;
             UpdateClothingDetails(item);
         }
+        UpdateCharacterImage();
     }
 
     private void UpdateClothingDetails(ClothingItem item) {
@@ -98,7 +105,18 @@ public class ClothingSelectionManager : MonoBehaviour {
     }
 
     private void UpdateCharacterImage() {
-        // Implement logic later
+        hatRenderer.sprite = GetSelectedClothingSprite(ItemType.Hat);
+        shirtRenderer.sprite = GetSelectedClothingSprite(ItemType.Shirt);
+        pantsRenderer.sprite = GetSelectedClothingSprite(ItemType.Pants);
+        shoesRenderer.sprite = GetSelectedClothingSprite(ItemType.Shoes);
+    }
+
+    private Sprite GetSelectedClothingSprite(ItemType itemType) {
+        if (selectedClothing.ContainsKey(itemType)) {
+            return selectedClothing[itemType].ClotSeleSprite;
+        } else {
+            return null;
+        }
     }
 
     private void UpdateCurrentPrice() {
@@ -148,5 +166,12 @@ public class ClothingSelectionManager : MonoBehaviour {
         UpdateCartItemsText();
         UpdateCurrentPrice();
         playerTransform.gameObject.GetComponent<PlayerController>().SetWalkingState();
+    }
+
+    public void SendCurrentAppearance(List<ClothingItem> currentAppearance) {
+        foreach (var item in currentAppearance) {
+            selectedClothing[item.Type] = item;
+        }
+        UpdateCharacterImage();
     }
 }

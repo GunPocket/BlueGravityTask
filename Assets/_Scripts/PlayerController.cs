@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     [Header("Player References")]
@@ -9,12 +10,15 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Collider2D playerCollider;
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private PlayerAppearance playerAppearance;
+    [SerializeField] private ExitGameInteractable exitGameInteractable;
 
     [Header("UI References")]
     [SerializeField] private GameObject commentUI;
     [SerializeField] private GameObject dressingRoomUI;
-    [SerializeField] private GameObject checkoutUICanvas;
+    [SerializeField] private GameObject checkoutUI;
+    [SerializeField] private GameObject exitGameUI;
     [SerializeField] private TMP_Text moneyText;
+    [SerializeField] private ClothingSelectionManager clothingSelectionManager;
 
     [Header("Variables about player")]
     [SerializeField] private float playerMoney = 200.00f;
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 
         commentUI.SetActive(false);
         dressingRoomUI.SetActive(false);
-        checkoutUICanvas.SetActive(false);
+        checkoutUI.SetActive(false);
 
         if (rb == null) {
             rb = GetComponent<Rigidbody2D>();
@@ -111,6 +115,8 @@ public class PlayerController : MonoBehaviour {
                 EnterDressingRoom();
             } else if (currentInteractable.CompareTag("Checkout")) {
                 EnterCheckout();
+            } else if (currentInteractable.CompareTag("ExitGame")) {
+                ExitGameQuestion();
             } else {
                 rb.velocity = Vector2.zero;
                 ClothingItem item = currentInteractable.ClothingItem;
@@ -125,14 +131,24 @@ public class PlayerController : MonoBehaviour {
         currentState = PlayerState.Dressing;
         rb.velocity = Vector2.zero;
         gameObject.SetActive(false);
+
+        clothingSelectionManager.SendCurrentAppearance(CurrentlyWearing);
     }
 
     private void EnterCheckout() {
-        checkoutUICanvas.SetActive(true);
+        checkoutUI.SetActive(true);
         rb.velocity = Vector2.zero;
         currentState = PlayerState.OnCheckOut;
         gameObject.SetActive(false);
     }
+
+    private void ExitGameQuestion() {
+        exitGameUI.SetActive(true);
+        rb.velocity = Vector2.zero;
+        currentState = PlayerState.Interacting;
+        gameObject.SetActive(false);
+    }
+
 
     private void Exit() {
         if (currentState == PlayerState.Interacting) {
@@ -146,7 +162,7 @@ public class PlayerController : MonoBehaviour {
             inventoryManager.HideInventoryUI();
         } else if (currentState == PlayerState.OnCheckOut) {
             currentState = PlayerState.Walking;
-            checkoutUICanvas.SetActive(false);
+            checkoutUI.SetActive(false);
         }
         gameObject.SetActive(true);
     }
@@ -163,14 +179,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom") || other.CompareTag("Checkout")) {
+        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom") || other.CompareTag("Checkout") || other.CompareTag("ExitGame")) {
             canInteract = true;
             currentInteractable = other.GetComponent<InteractableObject>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom") || other.CompareTag("Checkout")) {
+        if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom") || other.CompareTag("Checkout") || other.CompareTag("ExitGame")) {
             canInteract = false;
             currentInteractable = null;
         }
@@ -198,5 +214,9 @@ public class PlayerController : MonoBehaviour {
     public void SetWalkingState() {
         currentState = PlayerState.Walking;
         gameObject.SetActive(true);
+    }
+
+    public void ExitGame() {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
