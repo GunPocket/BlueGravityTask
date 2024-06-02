@@ -1329,7 +1329,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1600, y: 900}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2271,6 +2271,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7458814099577633805, guid: 17ee61f6125624445bb7830de86e723e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -11.599976
+      objectReference: {fileID: 0}
     - target: {fileID: 8240355434554771209, guid: 17ee61f6125624445bb7830de86e723e, type: 3}
       propertyPath: playerController
       value: 
@@ -2289,17 +2293,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 805177893196220036, guid: bc91aed139c9c9249b9a5a988408c18a, type: 3}
-      propertyPath: PlayerTransform
-      value: 
-      objectReference: {fileID: 1778105917}
-    - target: {fileID: 805177893196220036, guid: bc91aed139c9c9249b9a5a988408c18a, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1778105916}
-    - target: {fileID: 805177893196220036, guid: bc91aed139c9c9249b9a5a988408c18a, type: 3}
-      propertyPath: teleportLocation
-      value: 
-      objectReference: {fileID: 519795483}
     - target: {fileID: 2088905234146127992, guid: bc91aed139c9c9249b9a5a988408c18a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2609,10 +2605,6 @@ PrefabInstance:
     - target: {fileID: 8584154014722001735, guid: a154632cf0e5eda4a8145a7d60fe71c0, type: 3}
       propertyPath: m_Name
       value: ExitCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8584154014722001735, guid: a154632cf0e5eda4a8145a7d60fe71c0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8932368166474264049, guid: a154632cf0e5eda4a8145a7d60fe71c0, type: 3}
       propertyPath: playerController

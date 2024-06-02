@@ -6,7 +6,6 @@ public class CheckoutUI : MonoBehaviour {
     [SerializeField] private List<ShoppingCartOption> inventoryImageAreas;
     [SerializeField] private List<ShoppingCartOption> cartImageAreas;
     [SerializeField] private Button exitButton;
-
     [SerializeField] private PlayerController playerController;
 
     [System.Serializable]
@@ -15,7 +14,7 @@ public class CheckoutUI : MonoBehaviour {
         public List<Button> imageAreas;
     }
 
-    public void Awake() {
+    private void Awake() {
         exitButton.onClick.AddListener(ExitCheckout);
         ShowCheckoutUI();
     }
@@ -24,7 +23,6 @@ public class CheckoutUI : MonoBehaviour {
         UpdateMoneyText();
         UpdateInventoryButtons(playerController.InventoryManager.Inventory);
         UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
-
         gameObject.SetActive(true);
     }
 
@@ -38,7 +36,6 @@ public class CheckoutUI : MonoBehaviour {
 
     private void UpdateInventoryButtons(List<ClothingItem> inventory) {
         ClearAllImageAreas(inventoryImageAreas);
-
         foreach (var item in inventory) {
             UpdateClothingImage(inventoryImageAreas, item, () => SellItem(item));
         }
@@ -46,7 +43,6 @@ public class CheckoutUI : MonoBehaviour {
 
     private void UpdateCartButtons(List<ClothingItem> shoppingCart) {
         ClearAllImageAreas(cartImageAreas);
-
         foreach (var item in shoppingCart) {
             UpdateClothingImage(cartImageAreas, item, () => BuyItem(item));
         }
@@ -67,12 +63,12 @@ public class CheckoutUI : MonoBehaviour {
     private void UpdateClothingImage(List<ShoppingCartOption> options, ClothingItem item, UnityEngine.Events.UnityAction action) {
         foreach (var option in options) {
             if (option.type == item.Type) {
-                for (int i = 0; i < option.imageAreas.Count; i++) {
-                    if (!option.imageAreas[i].gameObject.activeSelf) {
-                        option.imageAreas[i].gameObject.SetActive(true);
-                        option.imageAreas[i].GetComponent<Image>().sprite = item.Image;
-                        option.imageAreas[i].onClick.RemoveAllListeners();
-                        option.imageAreas[i].onClick.AddListener(action);
+                foreach (var imageArea in option.imageAreas) {
+                    if (!imageArea.gameObject.activeSelf) {
+                        imageArea.gameObject.SetActive(true);
+                        imageArea.GetComponent<Image>().sprite = item.Image;
+                        imageArea.onClick.RemoveAllListeners();
+                        imageArea.onClick.AddListener(action);
                         break;
                     }
                 }
@@ -85,11 +81,9 @@ public class CheckoutUI : MonoBehaviour {
             Debug.Log("Cannot sell an item that you are currently wearing!");
             return;
         }
-
         int sellValue = Mathf.FloorToInt(item.Value * 0.1f);
         playerController.PlayerMoney += sellValue;
         UpdateMoneyText();
-
         if (playerController.InventoryManager.Inventory.Contains(item)) {
             playerController.InventoryManager.RemoveItemFromInventory(item);
             UpdateInventoryButtons(playerController.InventoryManager.Inventory);
