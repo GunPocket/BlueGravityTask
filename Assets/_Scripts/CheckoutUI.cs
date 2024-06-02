@@ -78,7 +78,6 @@ public class CheckoutUI : MonoBehaviour {
 
     private void SellItem(ClothingItem item) {
         if (playerController.CurrentlyWearing.Contains(item)) {
-            Debug.Log("Cannot sell an item that you are currently wearing!");
             return;
         }
         int sellValue = Mathf.FloorToInt(item.Value * 0.1f);
