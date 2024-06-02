@@ -11,7 +11,7 @@ public class CheckoutUI : MonoBehaviour {
     [System.Serializable]
     public struct ShoppingCartOption {
         public ClothingItem.ItemType type;
-        public List<Button> imageAreas;
+        public List<Image> imageAreas;
     }
 
     private void Awake() {
@@ -21,8 +21,8 @@ public class CheckoutUI : MonoBehaviour {
 
     public void ShowCheckoutUI() {
         UpdateMoneyText();
-        UpdateInventoryButtons(playerController.InventoryManager.Inventory);
-        UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
+        UpdateUI(playerController.InventoryManager.Inventory, inventoryImageAreas, SellItem);
+        UpdateUI(playerController.InventoryManager.ShoppingCart, cartImageAreas, BuyItem);
         gameObject.SetActive(true);
     }
 
@@ -34,17 +34,10 @@ public class CheckoutUI : MonoBehaviour {
         playerController.UpdateMoney($"Money: ${playerController.PlayerMoney:F2}");
     }
 
-    private void UpdateInventoryButtons(List<ClothingItem> inventory) {
-        ClearAllImageAreas(inventoryImageAreas);
-        foreach (var item in inventory) {
-            UpdateClothingImage(inventoryImageAreas, item, () => SellItem(item));
-        }
-    }
-
-    private void UpdateCartButtons(List<ClothingItem> shoppingCart) {
-        ClearAllImageAreas(cartImageAreas);
-        foreach (var item in shoppingCart) {
-            UpdateClothingImage(cartImageAreas, item, () => BuyItem(item));
+    private void UpdateUI(List<ClothingItem> items, List<ShoppingCartOption> areas, System.Action<ClothingItem> action) {
+        ClearAllImageAreas(areas);
+        foreach (var item in items) {
+            UpdateClothingImage(areas, item, action);
         }
     }
 
@@ -54,21 +47,21 @@ public class CheckoutUI : MonoBehaviour {
         }
     }
 
-    private void ClearImageAreas(List<Button> imageAreas) {
+    private void ClearImageAreas(List<Image> imageAreas) {
         foreach (var imageArea in imageAreas) {
             imageArea.gameObject.SetActive(false);
         }
     }
 
-    private void UpdateClothingImage(List<ShoppingCartOption> options, ClothingItem item, UnityEngine.Events.UnityAction action) {
+    private void UpdateClothingImage(List<ShoppingCartOption> options, ClothingItem item, System.Action<ClothingItem> action) {
         foreach (var option in options) {
             if (option.type == item.Type) {
                 foreach (var imageArea in option.imageAreas) {
                     if (!imageArea.gameObject.activeSelf) {
                         imageArea.gameObject.SetActive(true);
-                        imageArea.GetComponent<Image>().sprite = item.Image;
-                        imageArea.onClick.RemoveAllListeners();
-                        imageArea.onClick.AddListener(action);
+                        imageArea.sprite = item.Image;
+                        imageArea.GetComponent<Button>().onClick.RemoveAllListeners();
+                        imageArea.GetComponent<Button>().onClick.AddListener(() => action.Invoke(item));
                         break;
                     }
                 }
@@ -80,15 +73,17 @@ public class CheckoutUI : MonoBehaviour {
         if (playerController.CurrentlyWearing.Contains(item)) {
             return;
         }
+
         int sellValue = Mathf.FloorToInt(item.Value * 0.1f);
         playerController.PlayerMoney += sellValue;
         UpdateMoneyText();
+
         if (playerController.InventoryManager.Inventory.Contains(item)) {
             playerController.InventoryManager.RemoveItemFromInventory(item);
-            UpdateInventoryButtons(playerController.InventoryManager.Inventory);
+            UpdateUI(playerController.InventoryManager.Inventory, inventoryImageAreas, SellItem);
         } else if (playerController.InventoryManager.ShoppingCart.Contains(item)) {
             playerController.InventoryManager.RemoveItemFromCart(item);
-            UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
+            UpdateUI(playerController.InventoryManager.ShoppingCart, cartImageAreas, BuyItem);
         }
     }
 
@@ -96,10 +91,12 @@ public class CheckoutUI : MonoBehaviour {
         if (playerController.PlayerMoney >= item.Value) {
             playerController.PlayerMoney -= item.Value;
             UpdateMoneyText();
+
             playerController.InventoryManager.RemoveItemFromCart(item);
             playerController.InventoryManager.AddItemToInventory(item);
-            UpdateCartButtons(playerController.InventoryManager.ShoppingCart);
-            UpdateInventoryButtons(playerController.InventoryManager.Inventory);
+
+            UpdateUI(playerController.InventoryManager.ShoppingCart, cartImageAreas, BuyItem);
+            UpdateUI(playerController.InventoryManager.Inventory, inventoryImageAreas, SellItem);
         }
     }
 

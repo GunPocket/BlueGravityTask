@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void EnterCheckout() {
-        checkoutUI.SetActive(true);
+        checkoutUI.GetComponent<CheckoutUI>().ShowCheckoutUI();
         rb.velocity = Vector2.zero;
         currentState = PlayerState.OnCheckOut;
         gameObject.SetActive(false);
