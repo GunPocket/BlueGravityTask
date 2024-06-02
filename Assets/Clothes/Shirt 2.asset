@@ -16,5 +16,9 @@ MonoBehaviour:
   Type: 1
   Value: 9.99
   Image: {fileID: 21300000, guid: e407e84de4f83404eb3b5470fcd4b72d, type: 3}
+  IdleSprite: {fileID: -56261877, guid: c10f820eb4c986346bcf26d1f92b95c0, type: 3}
+  WalkingSprite1: {fileID: -1766546605, guid: a4c34649cbdbb4b4ba0a1a37e34e89fc, type: 3}
+  WalkingSprite2: {fileID: 898356618, guid: a4c34649cbdbb4b4ba0a1a37e34e89fc, type: 3}
   IsDefault: 0
+  IsEquipped: 0
   Description: Light and relaxed.

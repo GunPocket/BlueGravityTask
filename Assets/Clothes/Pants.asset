@@ -16,5 +16,9 @@ MonoBehaviour:
   Type: 0
   Value: 7.5
   Image: {fileID: 21300000, guid: 5e5270d07c58e394faba81016b7b0246, type: 3}
+  IdleSprite: {fileID: 1002853710, guid: 7300324d5e119f34d99bdf95c2635986, type: 3}
+  WalkingSprite1: {fileID: 384696801, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
+  WalkingSprite2: {fileID: 1801504596, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
   IsDefault: 0
+  IsEquipped: 0
   Description: Light and airy.

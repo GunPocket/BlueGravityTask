@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c2e1e7902ba50c4aa4e1812cf4590e3
+guid: 57e93ef0b15cde04c8f1120163519acd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: playerWalkin_0
+      name: playerIdletShoes_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22a2070d802691f44947395887f8fbad
-      internalID: 2021711486
+      spriteID: 3a3b62822f3c5d340a32aaf6d4bf4e85
+      internalID: -1483188592
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerWalkin_1
+      name: playerIdletShoes_1
       rect:
         serializedVersion: 2
         x: 64
@@ -132,8 +132,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a568be00deb6bca4f93c6e52228ccff2
-      internalID: 1021548638
+      spriteID: 2af0967a55644074b9d55baaca792ae8
+      internalID: 1908602356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerIdletShoes_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e683b812b8c1649468addc3a180fac72
+      internalID: -1163232142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerIdletShoes_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d9e250730492ce46b676bb76a877d15
+      internalID: -772796458
       vertices: []
       indices: 
       edges: []
@@ -149,8 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      playerWalkin_0: 2021711486
-      playerWalkin_1: 1021548638
+      playerIdletShoes_0: -1483188592
+      playerIdletShoes_1: 1908602356
+      playerIdletShoes_2: -1163232142
+      playerIdletShoes_3: -772796458
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

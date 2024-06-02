@@ -7,6 +7,7 @@ public class ClothingItem : ScriptableObject {
     public ItemType Type;
     public float Value;
     public Sprite Image;
+    public Sprite IdleSprite;
     public bool IsDefault = false;
 
     [TextArea(1, 5)] public string Description;   

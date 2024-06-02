@@ -16,5 +16,6 @@ MonoBehaviour:
   Type: 1
   Value: 2.99
   Image: {fileID: 21300000, guid: 6d26c8f817637414e8055d7f3085589e, type: 3}
+  IdleSprite: {fileID: -385424051, guid: c10f820eb4c986346bcf26d1f92b95c0, type: 3}
   IsDefault: 1
   Description: Basic garment for upper body coverage.

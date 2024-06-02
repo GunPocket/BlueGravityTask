@@ -16,5 +16,9 @@ MonoBehaviour:
   Type: 0
   Value: 24.99
   Image: {fileID: 21300000, guid: 6e45a138ff14b4a4e83f0b2e6d8c65f9, type: 3}
+  IdleSprite: {fileID: 1164118073, guid: 7300324d5e119f34d99bdf95c2635986, type: 3}
+  WalkingSprite1: {fileID: 644498075, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
+  WalkingSprite2: {fileID: 95999948, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
   IsDefault: 0
+  IsEquipped: 0
   Description: ' Classic and versatile.'

@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Beanie
   Type: 3
   Value: 2.99
-  Image: {fileID: 21300000, guid: 81e9b481a54deef43ac95a1e43eb6f9b, type: 3}
+  Image: {fileID: 1853236452, guid: 4b860a35b7537cd478c7a2357c2cb03f, type: 3}
+  IdleSprite: {fileID: 1853236452, guid: 4b860a35b7537cd478c7a2357c2cb03f, type: 3}
   IsDefault: 1
   Description: Simple headwear.

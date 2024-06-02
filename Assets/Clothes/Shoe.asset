@@ -16,5 +16,9 @@ MonoBehaviour:
   Type: 2
   Value: 10.99
   Image: {fileID: 21300000, guid: e44368566aac3c941b7c3eff9f5a9890, type: 3}
+  IdleSprite: {fileID: 1908602356, guid: 57e93ef0b15cde04c8f1120163519acd, type: 3}
+  WalkingSprite1: {fileID: 43168003, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
+  WalkingSprite2: {fileID: -798104276, guid: 0f6eff6e999e2404e8ed900178a706e3, type: 3}
   IsDefault: 0
+  IsEquipped: 0
   Description: Cool and comfy.

@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static ClothingItem;
 
 public class PlayerController : MonoBehaviour {
     [Header("Player References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Collider2D playerCollider;
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private PlayerAppearance playerAppearance;
 
     [Header("UI References")]
     [SerializeField] private GameObject commentUI;
@@ -46,9 +45,9 @@ public class PlayerController : MonoBehaviour {
         OnCheckOut
     }
 
-    private void Awake() {
+    private void Start() {
         UpdateMoney($"Money: ${playerMoney:F2}");
-        playerInput = new PlayerInput();
+
         commentUI.SetActive(false);
         dressingRoomUI.SetActive(false);
         checkoutUICanvas.SetActive(false);
@@ -65,12 +64,14 @@ public class PlayerController : MonoBehaviour {
             inventoryManager = GetComponent<InventoryManager>();
         }
 
-        // Remova essa linha para evitar problemas de referência circular
-        // CurrentlyWearing = inventoryManager.Inventory;
+        CurrentlyWearing = inventoryManager.Inventory.ToList();
+        playerAppearance.UpdateAppearance(CurrentlyWearing);
     }
 
     private void OnEnable() {
         currentState = PlayerState.Walking;
+
+        playerInput = new PlayerInput();
 
         playerInput.Player.Enable();
         playerInput.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
@@ -161,7 +162,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Interactable") || other.CompareTag("DressingRoom") || other.CompareTag("Checkout")) {
             canInteract = true;
@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour {
     public void EquipItem(ClothingItem item) {
         UnequipItemsOfType(item.Type);
         CurrentlyWearing.Add(item);
+        playerAppearance.UpdateAppearance(CurrentlyWearing);
     }
 
     public void UnequipItemsOfType(ClothingItem.ItemType itemType) {
@@ -191,6 +192,7 @@ public class PlayerController : MonoBehaviour {
                 CurrentlyWearing.RemoveAt(i);
             }
         }
+        playerAppearance.UpdateAppearance(CurrentlyWearing);
     }
 
     public void SetWalkingState() {

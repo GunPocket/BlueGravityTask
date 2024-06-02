@@ -16,5 +16,9 @@ MonoBehaviour:
   Type: 0
   Value: 19.99
   Image: {fileID: 21300000, guid: e03ad4419a5e3204a8c804953734e7e0, type: 3}
+  IdleSprite: {fileID: -832915318, guid: 7300324d5e119f34d99bdf95c2635986, type: 3}
+  WalkingSprite1: {fileID: -2115779821, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
+  WalkingSprite2: {fileID: 1452239044, guid: 8980ec567ebeaa84ab61084f443bea44, type: 3}
   IsDefault: 0
+  IsEquipped: 0
   Description: Practical with many pockets.

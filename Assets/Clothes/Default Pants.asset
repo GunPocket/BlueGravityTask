@@ -16,5 +16,6 @@ MonoBehaviour:
   Type: 0
   Value: 2.99
   Image: {fileID: 21300000, guid: df86b936c8d66f1479222ab88722aa48, type: 3}
+  IdleSprite: {fileID: -983494398, guid: 7300324d5e119f34d99bdf95c2635986, type: 3}
   IsDefault: 1
   Description: Standard legwear for everyday use.
