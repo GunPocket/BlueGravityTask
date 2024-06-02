@@ -479,7 +479,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
 --- !u!114 &2400251752911666068
 MonoBehaviour:
@@ -497,10 +497,13 @@ MonoBehaviour:
   playerCollider: {fileID: 6723347362387647373}
   inventoryManager: {fileID: 2570124820081032611}
   playerAppearance: {fileID: 3139246445605974266}
+  exitGameInteractable: {fileID: 0}
   commentUI: {fileID: 0}
   dressingRoomUI: {fileID: 0}
-  checkoutUICanvas: {fileID: 0}
+  checkoutUI: {fileID: 0}
+  exitGameUI: {fileID: 0}
   moneyText: {fileID: 0}
+  clothingSelectionManager: {fileID: 0}
   playerMoney: 200
   moveSpeed: 5
 --- !u!114 &2570124820081032611
